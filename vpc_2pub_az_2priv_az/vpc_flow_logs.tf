@@ -20,7 +20,7 @@ resource "aws_cloudwatch_log_group" "primary_zone_vpc_flow_log_group" {
 
 resource "aws_iam_role" "role_primary_vpc_flow_log" {
   assume_role_policy = "${data.aws_iam_policy_document.assume_policy_document_primary_vpc_flow_log.json}"
-  description = "IAM role allowing vpc flow log access to cloudwatch logs."
+  description        = "IAM role allowing vpc flow log access to cloudwatch logs."
   name               = "primary-vpc-flow-log"
 }
 
