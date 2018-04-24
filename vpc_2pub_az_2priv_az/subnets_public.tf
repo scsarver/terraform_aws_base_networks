@@ -49,11 +49,25 @@ resource "aws_route_table_association" "primary_zone_secondary_public_subnet_rou
 
 resource "aws_eip" "primary_zone_eip_public_nat" {
   vpc = true
+
+  tags {
+    "Name"         = "primary-zone-eip-public-nat"
+    "Project"      = "${var.aws_tag_project}"
+    "Project-Path" = "${var.aws_tag_project_path}"
+    "Tool"         = "${var.aws_tag_tool}"
+  }
 }
 
 resource "aws_nat_gateway" "primary_zone_public_nat_gateway" {
   allocation_id = "${aws_eip.primary_zone_eip_public_nat.id}"
   subnet_id     = "${aws_subnet.primary_zone_primary_public_subnet.id}"
+
+  tags {
+    "Name"         = "primary-zone-public-nat-gateway"
+    "Project"      = "${var.aws_tag_project}"
+    "Project-Path" = "${var.aws_tag_project_path}"
+    "Tool"         = "${var.aws_tag_tool}"
+  }
 }
 
 resource "aws_route" "primary_zone_public_internet_gateway_route" {
