@@ -40,9 +40,9 @@ data "aws_iam_policy_document" "policy_document_primary_vpc_flow_log" {
     actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
-      "logs:PutLogEvents",
       "logs:DescribeLogGroups",
       "logs:DescribeLogStreams",
+      "logs:PutLogEvents",
     ]
     effect = "Allow"
     resources = [
