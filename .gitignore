@@ -1,0 +1,10 @@
+.DS_store
+.git
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+tf.log
+tf-plan*
+.terraform
