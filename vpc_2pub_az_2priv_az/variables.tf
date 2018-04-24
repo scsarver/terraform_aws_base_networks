@@ -18,7 +18,7 @@ variable "cidr_external_access" {
   description = "The value of a a external access cidr block."
 }
 
-variable "ENV_aws_region"  {
+variable "ENV_aws_region" {
   type        = "string"
   description = "The AWS region used to build the assets in."
 }

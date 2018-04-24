@@ -1,4 +1,3 @@
-
 resource "aws_flow_log" "primary_zone_flow_log" {
   iam_role_arn   = "${aws_iam_role.role_primary_vpc_flow_log.arn}"
   log_group_name = "${aws_cloudwatch_log_group.primary_zone_vpc_flow_log_group.name}"
@@ -8,6 +7,7 @@ resource "aws_flow_log" "primary_zone_flow_log" {
 
 resource "aws_cloudwatch_log_group" "primary_zone_vpc_flow_log_group" {
   name = "primary-zone-log-group"
+
   #retention_in_days = "-1"
 }
 
@@ -27,7 +27,9 @@ data "aws_iam_policy_document" "assume_policy_document_primary_vpc_flow_log" {
     actions = [
       "sts:AssumeRole",
     ]
+
     effect = "Allow"
+
     principals {
       type        = "Service"
       identifiers = ["vpc-flow-logs.amazonaws.com"]
@@ -44,7 +46,9 @@ data "aws_iam_policy_document" "policy_document_primary_vpc_flow_log" {
       "logs:DescribeLogStreams",
       "logs:PutLogEvents",
     ]
+
     effect = "Allow"
+
     resources = [
       "*",
     ]
