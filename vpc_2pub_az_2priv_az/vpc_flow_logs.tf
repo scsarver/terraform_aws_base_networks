@@ -9,10 +9,18 @@ resource "aws_cloudwatch_log_group" "primary_zone_vpc_flow_log_group" {
   name = "primary-zone-log-group"
 
   #retention_in_days = "-1"
+  tags {
+    "Name"         = "primary-zone-vpc-flow-log-group"
+    "Project"      = "${var.aws_tag_project}"
+    "Project-Path" = "${var.aws_tag_project_path}"
+    "Tool"         = "${var.aws_tag_tool}"
+    "Zone"         = "primary"
+  }
 }
 
 resource "aws_iam_role" "role_primary_vpc_flow_log" {
   assume_role_policy = "${data.aws_iam_policy_document.assume_policy_document_primary_vpc_flow_log.json}"
+  description = "IAM role allowing vpc flow log access to cloudwatch logs."
   name               = "primary-vpc-flow-log"
 }
 
