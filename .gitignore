@@ -8,3 +8,4 @@
 tf.log
 tf-plan*
 .terraform
+backend.conf
