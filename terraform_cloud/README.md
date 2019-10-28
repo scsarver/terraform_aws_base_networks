@@ -3,7 +3,7 @@
 
 Terraform Cloud Notes:
 - Need to create your TF Cloud account: https://app.terraform.io
-- Need to create a workspace and point to your VCS code base where your terraform config lives.
+- Need to create a workspace and point to your VCS code base where your terraform config lives (you will need to authenticate to Github for example).
 - Need to add your cloud provider credentials to the workspace so TF Cloud can run plan and apply's to your account.
 - Need to create a user token and create your ~/.terraformrc file so your cli can run plans and apply's from your TF Cloud account.
 - Need to run terraform init --backend-config=./backend.conf so your state will be managed by Terraform cloud Note: your file can be named differently however this repo .gitignored backend.conf files so they wont be checked in to version control.
@@ -18,4 +18,4 @@ Code upgrade Notes (this is completed for in this directory but not an exhaustiv
 
 References:
 - Video for setting up Terraform Cloud: https://www.youtube.com/watch?v=l3ZbEO0z7z8
-- Note on variable file and '*.auto.tfvars': https://www.terraform.io/docs/cloud/workspaces/variables.html
+- Note on variable files and '*.auto.tfvars': https://www.terraform.io/docs/cloud/workspaces/variables.html
