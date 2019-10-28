@@ -1,6 +1,6 @@
 resource "aws_flow_log" "primary_zone_flow_log" {
   iam_role_arn   = "${aws_iam_role.role_primary_vpc_flow_log.arn}"
-  log_destination = "${aws_cloudwatch_log_group.primary_zone_vpc_flow_log_group.name}"
+  log_destination = "${aws_cloudwatch_log_group.primary_zone_vpc_flow_log_group.arn}"
   traffic_type   = "ALL"
   vpc_id         = "${aws_vpc.primary_zone.id}"
 }
