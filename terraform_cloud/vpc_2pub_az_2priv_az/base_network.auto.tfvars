@@ -1,6 +1,6 @@
 aws_tag_tool = "terraform"
 aws_tag_project = "terraform_aws_base_networks"
-aws_tag_project_path = "vpc_2pub_az_2priv_az"
+aws_tag_project_path = "terraform_cloud/vpc_2pub_az_2priv_az"
 cidr_external_access = "0.0.0.0/0"
 #
 #
