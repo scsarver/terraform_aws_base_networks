@@ -17,5 +17,6 @@ Code upgrade Notes (this is completed for in this directory but not an exhaustiv
   - Boolean properties must not be defined as Strings
 
 References:
+- Getting started: https://learn.hashicorp.com/terraform/cloud/tf_cloud_gettingstarted.html
 - Video for setting up Terraform Cloud: https://www.youtube.com/watch?v=l3ZbEO0z7z8
 - Note on variable files and '*.auto.tfvars': https://www.terraform.io/docs/cloud/workspaces/variables.html

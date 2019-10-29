@@ -1,0 +1,25 @@
+{
+  "Version": "2012-10-17",
+  "Statement":[
+    {
+      "Sid": "AllowECTwo",
+      "Effect": "Allow",
+      "Action":[
+        "ec2:*"
+      ],
+      "Resource":[
+        "*"
+      ]
+    },
+    {
+      "Sid": "DenyRds",
+      "Effect": "Deny",
+      "Action":[
+        "rds:*"
+      ],
+      "Resource":[
+        "*"
+      ]
+    }
+  ]
+}
