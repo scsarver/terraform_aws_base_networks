@@ -13,4 +13,5 @@ resource "aws_organizations_policy" "sandbox" {
 resource "aws_organizations_policy_attachment" "sandox" {
   policy_id = "${aws_organizations_policy.sandbox.id}"
   target_id = "${aws_organizations_organizational_unit.sandbox.id}"
+  depends_on = [aws_organizations_organizational_unit.sandbox]
 }
