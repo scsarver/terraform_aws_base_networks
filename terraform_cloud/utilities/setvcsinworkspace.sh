@@ -20,33 +20,92 @@ repo_name=$4
 repo_path=$5
 repo_branch=$6
 
+function usage {
+  echo "############################################################"
+  echo "USAGE:"
+  echo " "
+  echo "  Name: $0"
+  echo " "
+  echo "  Description: "
+  echo "      This script is used to set version control configuration on your workspace after"
+  echo "      you have created your workspace with a terraform init."
+  echo " "
+  echo " "
+  echo "  Command inputs:"
+  echo " "
+  echo '      $1 = Terraform Cloud organizations name'
+  echo '      $2 = Terraform Cloud workspace name (same as in your terraform backend configuration)'
+  echo '      $3 = Your Github user name'
+  echo '      $4 = Your Github repo name'
+  echo '      $5 = The path in your github repo where the terraform code is i.e. the working directory'
+  echo '      $6 = The branch of code your working directory should be using.'
+  echo " "
+  echo " "
+  echo "  Additional Notes:"
+  echo "      This script is assuming you have setup a Github OAuth provider in your Github organization."
+  echo " "
+  echo " "
+  echo "     ./$0 terraform_cloud_org_name workspace_name github_user github_repo terraform/terraform_config my_github_branch"
+  echo "############################################################"
+}
+
 if [ "" == "$1" ]; then
-  echo "Enterting the terraform cloud organization name as the first parameter is required"
+  usage()
+  echo " "
+  echo "Error:"
+  echo " "
+  echo "     Enterting the terraform cloud organization name as the first parameter is required"
+  echo " "
   exit 1
 fi
 
 if [ "" == "$2" ]; then
-  echo "Enterting the terraform cloud workspace name to be looked upas the second parameter is required"
+  usage()
+  echo " "
+  echo "Error:"
+  echo " "
+  echo "     Enterting the terraform cloud workspace name to be looked upas the second parameter is required"
+  echo " "
   exit 1
 fi
 
 if [ "" == "$3" ]; then
-  echo "Enterting the Github repo user is required."
+  usage()
+  echo " "
+  echo "Error:"
+  echo " "
+  echo "     Enterting the Github repo user is required."
+  echo " "
   exit 1
 fi
 
 if [ "" == "$4" ]; then
-  echo "Enterting the Github repo name is required."
+  usage()
+  echo " "
+  echo "Error:"
+  echo " "
+  echo "      Enterting the Github repo name is required."
+  echo " "
   exit 1
 fi
 
 if [ "" == "$5" ]; then
-  echo "Enterting the Github repo path user is required. (This is your terraform working directory!)"
+  usage()
+  echo " "
+  echo "Error:"
+  echo " "
+  echo "     Enterting the Github repo path user is required. (This is your terraform working directory!)"
+  echo " "
   exit 1
 fi
 
 if [ "" == "$5" ]; then
-  echo "Enterting the Github branch user is required."
+  usage()
+  echo " "
+  echo "Error:"
+  echo " "
+  echo "     Enterting the Github branch user is required."
+  echo " "
   exit 1
 fi
 
