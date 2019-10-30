@@ -44,6 +44,18 @@ echo "     Setting it in the following manner caused this error:"
 echo '          parent_id = "${aws_organizations_organization.org.id}"'
 echo " "
 
+echo "############################################################"
+echo " "
+echo "Error: Error creating organization: AlreadyInOrganizationException: The AWS account is already a member of an organization."
+echo " 	status code: 400, request id: c12fb763-6c08-4d66-b232-f12345678901"
+echo " 	"
+echo ' 	   on org.tf line 1, in resource "aws_organizations_organization" "org":'
+echo ' 	    1: resource "aws_organizations_organization" "org" {'
+echo " "
+echo "     This will happen when you have already created your organization the run will fail due to a duplicate organization."
+echo "     you will need to manually remove/delete your organization using th eaws console  Note: The organization must have all children accounts removed first."
+echo " "
+
 
 
 
