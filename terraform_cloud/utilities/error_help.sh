@@ -32,3 +32,31 @@ echo "Error: No valid credential sources found for AWS Provider."
 echo " "
 echo "     Have you added credentials to your workspace for AWS_ACCESS_KEY_ID & AWS_SECRET_ACCESS_KEY (or an assumable role)"
 echo " "
+
+echo "############################################################"
+echo " "
+echo "Error: invalid value for parent_id (see https://docs.aws.amazon.com/organizations/latest/APIReference/API_CreateOrganizationalUnit.html#organizations-CreateOrganizationalUnit-request-ParentId)"
+echo " "
+echo "     Did you set the parent id correctly for your OU, the id needs to come from the orgs roots list as shown in the documnetation:"
+echo '          parent_id = "${aws_organizations_organization.org.roots.0.id}"'
+echo " "
+echo "     Setting it in the following manner caused this error:"
+echo '          parent_id = "${aws_organizations_organization.org.id}"'
+echo " "
+
+
+
+
+# echo " Did you have a dependency error and need to verify the email address for the account before adding resources to the organization?"
+# echo "     Are you creating a new aws organization if so you may need to verify the email before resources can be associated to the org:"
+# echo "          Amazon Web Services needs to verify the email address associated with the master account of your AWS organization before"
+# echo "          you can invite existing AWS accounts to join your organization."
+# echo " "
+# echo "          To verify your email address, click the following link: ..."
+# echo " "
+# echo "      After clicking and verifying email the aws account landing page gives the following message:"
+# echo " "
+# echo "          Your email address has been verified"
+# echo "          You can now invite existing AWS accounts to join your organization."
+# echo " "
+# echo "    I added explicit depends_on code blocks to enforce a dependency chain."

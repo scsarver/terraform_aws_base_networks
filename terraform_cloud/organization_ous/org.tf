@@ -4,7 +4,7 @@ resource "aws_organizations_organization" "org" {
 
 resource "aws_organizations_organizational_unit" "sandbox" {
   name      = "Sandbox"
-  parent_id = "${aws_organizations_organization.org.id}"
+  parent_id = "${aws_organizations_organization.org.roots.0.id}"
   depends_on = [aws_organizations_organization.org]
 }
 
