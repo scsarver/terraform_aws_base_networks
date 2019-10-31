@@ -56,7 +56,23 @@ echo "     This will happen when you have already created your organization the 
 echo "     you will need to manually remove/delete your organization using th eaws console  Note: The organization must have all children accounts removed first."
 echo " "
 
-
+echo "############################################################"
+echo " "
+echo "Error: Error creating account: FinalizingOrganizationException: You cannot add accounts to your organization while it is initializing. Try again later."
+echo "	 status code: 400, request id: cd6f6423-ddc7-436d-9921-5da37c6a7f50"
+echo " "
+echo "     This happens when the organization creation happens very closely in time to when the organization is created such that asynchronously"
+echo "      the org is not completly ready to be used before you attempt to add an account to it. (A rerun after 15 minutes worked for me)"
+echo " "
+echo "     As recomended in the AWS documentation: "
+echo " "
+echo "       Important"
+echo " "
+echo "         If you get an error that indicates that you exceeded your account limits for the organization or that you can't add an account because your organization is still initializing,"
+echo "         wait until one hour after you created the organization and try again. If the error persists, contact AWS Support."
+echo " "
+echo "       https://docs.aws.amazon.com/organizations/latest/userguide/orgs_tutorials_basic.html"
+echo " "
 
 
 # echo " Did you have a dependency error and need to verify the email address for the account before adding resources to the organization?"

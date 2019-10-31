@@ -29,3 +29,11 @@ output "org_non_master_accounts" {
 output "org_roots" {
   value = "${aws_organizations_organization.org.roots}"
 }
+
+output "org_account1_id" {
+  value = "${aws_organizations_account.account1.id}"
+}
+
+output "org_account1_arn" {
+  value = "${aws_organizations_account.account1.arn}"
+}
