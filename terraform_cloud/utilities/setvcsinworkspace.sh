@@ -50,7 +50,7 @@ function usage {
 }
 
 if [ "" == "$1" ]; then
-  usage()
+  usage
   echo " "
   echo "Error:"
   echo " "
@@ -60,7 +60,7 @@ if [ "" == "$1" ]; then
 fi
 
 if [ "" == "$2" ]; then
-  usage()
+  usage
   echo " "
   echo "Error:"
   echo " "
@@ -70,7 +70,7 @@ if [ "" == "$2" ]; then
 fi
 
 if [ "" == "$3" ]; then
-  usage()
+  usage
   echo " "
   echo "Error:"
   echo " "
@@ -80,7 +80,7 @@ if [ "" == "$3" ]; then
 fi
 
 if [ "" == "$4" ]; then
-  usage()
+  usage
   echo " "
   echo "Error:"
   echo " "
@@ -90,7 +90,7 @@ if [ "" == "$4" ]; then
 fi
 
 if [ "" == "$5" ]; then
-  usage()
+  usage
   echo " "
   echo "Error:"
   echo " "
@@ -100,7 +100,7 @@ if [ "" == "$5" ]; then
 fi
 
 if [ "" == "$5" ]; then
-  usage()
+  usage
   echo " "
   echo "Error:"
   echo " "

@@ -20,6 +20,16 @@
       "Resource":[
         "*"
       ]
+    },
+    {
+      "Sid": "DenyStopCloudTrail",
+      "Effect": "Deny",
+      "Action":[
+        "cloudtrail:StopLogging"
+      ],
+      "Resource":[
+        "arn:aws:cloudtrail:::trail/*"
+      ]
     }
   ]
 }
