@@ -1,4 +1,3 @@
-
 data "template_file" "sandbox-ou-scp-policy" {
   template = "${file("policies/sandbox-ou.json")}"
 }

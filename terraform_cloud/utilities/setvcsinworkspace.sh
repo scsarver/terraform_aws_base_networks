@@ -182,7 +182,7 @@ payload=$(cat <<COMMENTBLOCK
 COMMENTBLOCK
 )
 
-# echo "$payload" | jq -r "."
+echo "$payload" | jq -r "."
 
 # # Patch workspace attributes
 workspace_update_output=$(curl \
