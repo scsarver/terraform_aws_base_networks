@@ -38,12 +38,12 @@ aws_account_provider_session="assume-role-session-$aws_account-$aws_account_prov
 aws_assumed_role_out_file='awstmp'
 
 
+unset AWS_PROFILE
 
 assume_out=$((aws sts assume-role --role-arn $aws_account_provider_arn --role-session-name $aws_account_provider_session)2>&1)
 touch $aws_assumed_role_out_file
 echo "$assume_out" |  jq -r '.Credentials.AccessKeyId, .Credentials.SecretAccessKey, .Credentials.SessionToken'>$aws_assumed_role_out_file
 
-unset AWS_PROFILE
 aws configure set aws_access_key_id $(sed -n '1p' $aws_assumed_role_out_file) --profile $aws_profile
 aws configure set aws_secret_access_key $(sed -n '2p' $aws_assumed_role_out_file) --profile $aws_profile
 aws configure set aws_session_token $(sed -n '3p' $aws_assumed_role_out_file) --profile $aws_profile
