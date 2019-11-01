@@ -30,6 +30,18 @@ output "org_roots" {
   value = "${aws_organizations_organization.org.roots}"
 }
 
+output "org_ou_sandbox_id" {
+  value = "${aws_organizations_organizational_unit.sandbox.id}"
+}
+
+output "org_ou_sandbox_arn" {
+  value = "${aws_organizations_organizational_unit.sandbox.arn}"
+}
+
+output "org_ou_sandbox_accounts" {
+  value = "${aws_organizations_organizational_unit.sandbox.accounts}"
+}
+
 output "org_account1_id" {
   value = "${aws_organizations_account.account1.id}"
 }

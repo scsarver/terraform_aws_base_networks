@@ -12,10 +12,10 @@
       ]
     },
     {
-      "Sid": "DenyRds",
+      "Sid": "Denys3",
       "Effect": "Deny",
       "Action":[
-        "rds:*"
+        "s3:*"
       ],
       "Resource":[
         "*"
