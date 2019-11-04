@@ -30,6 +30,9 @@ sentinel_policy_directory=
 sentinel_policy_name=
 sentinel_mocks_directory=
 
+sentinel_functions_file='functions.sentinel'
+sentinel_config_file='sentinel.json'
+
 if [ "" == "$(which sentinel)" ]; then
   echo "The sentinel (Simulator) executable was not found see the following for installation instructions: https://docs.hashicorp.com/sentinel/intro/getting-started/install"
   exit 1
@@ -77,7 +80,16 @@ else
 fi
 
 echo ' '
+echo "Copy the sentinel functions file to the directory where the policy file is located: $sentinel_policy_directory"
+scripts_directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+echo $scripts_directory
+cp "$scripts_directory/$sentinel_functions_file" "$sentinel_policy_directory/$sentinel_functions_file"
+
+
+echo ' '
 echo "Change directory to where the policy file is located: $sentinel_policy_directory"
+
 cd "$sentinel_policy_directory"
 
 echo ' '
@@ -85,6 +97,7 @@ echo 'Creating a Sentinel Simulator configuration file called sentinel.json this
 SENTINEL_MOCK_CONTENTS=$(cat <<COMMENTBLOCK
 {
   "mock": {
+    "tffunctions": "$sentinel_functions_file",
     "tfrun": "$sentinel_mocks_directory/mock-tfrun.sentinel",
     "tfconfig": "$sentinel_mocks_directory/mock-tfconfig.sentinel",
     "tfplan": "$sentinel_mocks_directory/mock-tfplan.sentinel",
@@ -93,14 +106,13 @@ SENTINEL_MOCK_CONTENTS=$(cat <<COMMENTBLOCK
 }
 COMMENTBLOCK
 )
-echo "$SENTINEL_MOCK_CONTENTS">"sentinel.json"
-
-
+echo "$SENTINEL_MOCK_CONTENTS">"$sentinel_config_file"
 
 echo ' '
-echo "Executing [sentinel apply -trace -config=sentinel.json \"$sentinel_policy_name\"]"
-sentinel apply -trace -config=sentinel.json "$sentinel_policy_name"
+echo "Executing [sentinel apply -trace -config=$sentinel_config_file \"$sentinel_policy_name\"]"
+sentinel apply -trace -config=$sentinel_config_file "$sentinel_policy_name"
 
 echo ' '
 echo "Removing the sentinal simulator configuration file: sentinel.json"
+rm "functions.sentinel"
 rm "sentinel.json"
