@@ -2,6 +2,7 @@ import "tfplan"
 
 # Functions were taken from the open source examples on HashiCorps github repo found here:
 # https://github.com/hashicorp/tfe-policies-example
+# https://github.com/hashicorp/terraform-guides
 
 # Get an array of all resources of the given type (or an empty array).
 get_resources = func(type) {

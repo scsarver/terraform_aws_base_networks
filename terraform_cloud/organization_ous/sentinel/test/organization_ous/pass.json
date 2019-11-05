@@ -1,0 +1,47 @@
+{
+  "global":{},
+  "test": {
+    "main": true,
+    "org_feature_set_all": true,
+  	"org_enabled_scp": true,
+  	"org_policy_descriptions_required": true,
+    "org_account_email_required": true
+  },
+  "mock": {
+    "tfplan": {
+      "resources": {
+        "aws_organizations_organization": {
+          "pass-org": {
+            "0": {
+              "applied":{
+                "feature_set": "ALL",
+                "enabled_policy_types": ["SERVICE_CONTROL_POLICY"]
+              }
+            }
+          }
+        },
+        "aws_organizations_policy": {
+          "pass-sandbox": {
+            "0": {
+              "applied": {
+                "description": "This is a service control policy to restrict actions that can be done in accounts under the sandbox OU."
+              }
+            }
+          }
+        },
+        "aws_organizations_account": {
+          "pass-account1": {
+            "0": {
+              "applied": {
+                "email": "testemail@fancydomain.com"
+              }
+            }
+          }
+        }
+      }
+    },
+    "tfstate": {},
+    "tfconfig": {},
+    "tfrun": {}
+  }
+}

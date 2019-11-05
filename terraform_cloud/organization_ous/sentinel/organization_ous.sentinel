@@ -2,36 +2,78 @@ import "tfplan"
 import "tfstate"
 import "tfconfig"
 import "tfrun"
-import "tffunctions"
+
+# Functions were taken from the open source examples on HashiCorps github repo found here:
+# https://github.com/hashicorp/tfe-policies-example
+
+# Get an array of all resources of the given type (or an empty array).
+get_resources = func(type) {
+	if length(tfplan.module_paths else []) > 0 { # always true in the real tfplan import
+		return get_resources_all_modules(type)
+	} else { # fallback for tests
+		return get_resources_root_only(type)
+	}
+}
+
+get_resources_root_only = func(type) {
+	resources = []
+	named_and_counted_resources = tfplan.resources[type] else {}
+	# Get resource bodies out of nested resource maps, from:
+	# {"name": {"0": {"applied": {...}, "diff": {...} }, "1": {...}}, "name": {...}}
+	# to:
+	# [{"applied": {...}, "diff": {...}}, {"applied": {...}, "diff": {...}}, ...]
+	for named_and_counted_resources as _, instances {
+		for instances as _, body {
+			append(resources, body)
+		}
+	}
+	return resources
+}
+
+get_resources_all_modules = func(type) {
+	resources = []
+	for tfplan.module_paths as path {
+		named_and_counted_resources = tfplan.module(path).resources[type] else {}
+		# Get resource bodies out of nested resource maps, from:
+		# {"name": {"0": {"applied": {...}, "diff": {...} }, "1": {...}}, "name": {...}}
+		# to:
+		# [{"applied": {...}, "diff": {...}}, {"applied": {...}, "diff": {...}}, ...]
+		for named_and_counted_resources as _, instances {
+			for instances as _, body {
+				append(resources, body)
+			}
+		}
+	}
+	return resources
+}
 
 org_feature_set_all = rule {
-	all tffunctions.get_resources("aws_organizations_organization") as org {
+	all get_resources("aws_organizations_organization") as org {
 		org.applied.feature_set is "ALL"
 	}
 }
 
 org_enabled_scp = rule {
-	all tffunctions.get_resources("aws_organizations_organization") as org {
+	all get_resources("aws_organizations_organization") as org {
 		org.applied.enabled_policy_types contains "SERVICE_CONTROL_POLICY"
 	}
 }
 
 org_policy_descriptions_required = rule {
-	all tffunctions.get_resources("aws_organizations_policy") as org_policy {
-		org_policy.applied.description is not null
+	all get_resources("aws_organizations_policy") as org_policy {
+		0 < length( org_policy.applied.description )
 	}
 }
 
 org_account_email_required = rule {
-	all tffunctions.get_resources("aws_organizations_account") as org_account {
-		org_account.applied.email is not null
+	all get_resources("aws_organizations_account") as org_account {
+		0 < length( org_account.applied.email )
 	}
-
 }
 
-
+print("------------------------------------------------------------")
 print("Sentinel policy: organizations_ous")
-print("Note: This sentinel policy is dependent on an external functions file we are importing via tffunctions")
+print("------------------------------------------------------------")
 
 main = rule {
 	org_feature_set_all and

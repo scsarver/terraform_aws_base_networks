@@ -1,0 +1,46 @@
+{
+  "test": {
+    "main": false,
+    "org_feature_set_all": false,
+  	"org_enabled_scp": false,
+  	"org_policy_descriptions_required": false,
+    "org_account_email_required": false
+  },
+  "mock": {
+    "tfplan": {
+      "resources": {
+        "aws_organizations_organization": {
+          "fail-org": {
+            "0": {
+              "applied":{
+                "feature_set": "CONSOLIDATED_BILLING",
+                "enabled_policy_types": ["FAKE_POLICY_TYPE"]
+              }
+            }
+          }
+        },
+        "aws_organizations_policy": {
+          "fail-sandbox": {
+            "0": {
+              "applied": {
+                "description": ""
+              }
+            }
+          }
+        },
+        "aws_organizations_account": {
+          "fail-account1": {
+            "0": {
+              "applied": {
+                "email": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "tfstate": {},
+    "tfconfig": {},
+    "tfrun": {}
+  }
+}
