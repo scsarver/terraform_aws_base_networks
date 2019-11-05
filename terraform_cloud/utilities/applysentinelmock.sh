@@ -87,12 +87,6 @@ else
 fi
 
 echo ' '
-echo "Copy the sentinel functions file to the directory where the policy file is located: $sentinel_policy_directory"
-scripts_directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
-echo $scripts_directory
-
-echo ' '
 echo "Change directory to where the policy file is located: $sentinel_policy_directory"
 
 cd "$sentinel_policy_directory"
@@ -118,5 +112,4 @@ sentinel apply -trace -config=$sentinel_config_file "$sentinel_policy_name"
 
 echo ' '
 echo "Removing the sentinal simulator configuration file: sentinel.json"
-rm "functions.sentinel"
 rm "sentinel.json"
