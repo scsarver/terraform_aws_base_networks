@@ -1,0 +1,20 @@
+{
+  "test": {
+    "main": true
+    },
+    "mock": {
+      "tfplan": {
+        "resources": {
+        }
+      },
+      "tfstate": {},
+      "tfconfig": {},
+      "tfrun": {},
+      "sentinel_lib_variables": {
+        "validate_variables_have_descriptions": true
+      },
+      "sentinel_lib_outputs": {
+        "validate_outputs_have_descriptions": true
+      }
+    }
+}

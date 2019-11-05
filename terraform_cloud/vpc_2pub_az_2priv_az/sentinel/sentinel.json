@@ -1,0 +1,9 @@
+{
+  "mock": {
+   "sentinel_lib_outputs": "/Users/stephansarver/Documents/repos/terraform_aws_base_networks/terraform_cloud/utilities/sentinel_library/outputs.sentinel",   "sentinel_lib_resources": "/Users/stephansarver/Documents/repos/terraform_aws_base_networks/terraform_cloud/utilities/sentinel_library/resources.sentinel",   "sentinel_lib_variables": "/Users/stephansarver/Documents/repos/terraform_aws_base_networks/terraform_cloud/utilities/sentinel_library/variables.sentinel",
+    "tfrun": "/Users/stephansarver/Documents/repos/terraform_aws_base_networks/terraform_cloud/vpc_2pub_az_2priv_az/sentinel/tf-cloud-sentinel-mocks/mock-tfrun.sentinel",
+    "tfconfig": "/Users/stephansarver/Documents/repos/terraform_aws_base_networks/terraform_cloud/vpc_2pub_az_2priv_az/sentinel/tf-cloud-sentinel-mocks/mock-tfconfig.sentinel",
+    "tfplan": "/Users/stephansarver/Documents/repos/terraform_aws_base_networks/terraform_cloud/vpc_2pub_az_2priv_az/sentinel/tf-cloud-sentinel-mocks/mock-tfplan.sentinel",
+    "tfstate": "/Users/stephansarver/Documents/repos/terraform_aws_base_networks/terraform_cloud/vpc_2pub_az_2priv_az/sentinel/tf-cloud-sentinel-mocks/mock-tfstate.sentinel"
+  }
+}

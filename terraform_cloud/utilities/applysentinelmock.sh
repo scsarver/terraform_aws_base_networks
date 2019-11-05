@@ -29,6 +29,7 @@ set +v #verbose
 sentinel_policy_directory=
 sentinel_policy_name=
 sentinel_mocks_directory=
+sentinel_functions_directory=
 
 sentinel_config_file='sentinel.json'
 
@@ -86,6 +87,23 @@ else
   fi
 fi
 
+
+if [ "" == "$4" ]; then
+  echo " "
+  echo "No functions path was provided, so no additional functions will be added to $sentinel_config_file"
+  echo " "
+else
+  if [ "." == "$4" ]; then
+    sentinel_functions_directory="$(pwd)"
+  else
+    sentinel_functions_directory="$4"
+  fi
+  if [ ! -d "$sentinel_functions_directory" ]; then
+    echo "The path entered to your sentinel functions directory is not valid: [$sentinel_functions_directory]"
+    exit 1
+  fi
+fi
+
 echo ' '
 echo "Change directory to where the policy file is located: $sentinel_policy_directory"
 
@@ -93,9 +111,24 @@ cd "$sentinel_policy_directory"
 
 echo ' '
 echo 'Creating a Sentinel Simulator configuration file called sentinel.json this file tells the simulator to load the mock plan, config, state and run files.'
-SENTINEL_MOCK_CONTENTS=$(cat <<COMMENTBLOCK
+SENTINEL_MOCK_CONTENTS1=$(cat <<COMMENTBLOCK
 {
   "mock": {
+COMMENTBLOCK
+)
+
+# Iterate through the function directory and add all files ending in .sentinel as import objects prefixed with sentinel_lib_${file%.*}
+SENTINEL_MOCK_CONTENTS2=
+
+if [ -d "$sentinel_functions_directory" ]; then
+  for file in $(ls $sentinel_functions_directory)
+  do
+    if [[ "$file" == *.sentinel ]]; then
+      SENTINEL_MOCK_CONTENTS2+="   \"sentinel_lib_${file%.*}\": \"$sentinel_functions_directory/$file\","
+    fi
+  done
+fi
+SENTINEL_MOCK_CONTENTS3=$(cat <<COMMENTBLOCK
     "tfrun": "$sentinel_mocks_directory/mock-tfrun.sentinel",
     "tfconfig": "$sentinel_mocks_directory/mock-tfconfig.sentinel",
     "tfplan": "$sentinel_mocks_directory/mock-tfplan.sentinel",
@@ -104,7 +137,12 @@ SENTINEL_MOCK_CONTENTS=$(cat <<COMMENTBLOCK
 }
 COMMENTBLOCK
 )
-echo "$SENTINEL_MOCK_CONTENTS">"$sentinel_config_file"
+
+echo "$SENTINEL_MOCK_CONTENTS1">"$sentinel_config_file"
+if [ "" != "$SENTINEL_MOCK_CONTENTS2" ]; then
+  echo "$SENTINEL_MOCK_CONTENTS2">>"$sentinel_config_file"
+fi
+echo "$SENTINEL_MOCK_CONTENTS3">>"$sentinel_config_file"
 
 echo ' '
 echo "Executing [sentinel apply -trace -config=$sentinel_config_file \"$sentinel_policy_name\"]"
@@ -112,4 +150,4 @@ sentinel apply -trace -config=$sentinel_config_file "$sentinel_policy_name"
 
 echo ' '
 echo "Removing the sentinal simulator configuration file: sentinel.json"
-rm "sentinel.json"
+# rm "sentinel.json"

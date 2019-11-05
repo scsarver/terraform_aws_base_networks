@@ -9,3 +9,4 @@ tf.log
 tf-plan*
 .terraform
 backend.conf
+tf-cloud-sentinel-mocks

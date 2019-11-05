@@ -1,0 +1,8 @@
+{
+  "mock": {
+    "tfrun": "/Users/stephansarver/Downloads/run-4XEyDsdtYEGCfodt-sentinel-mocks/mock-tfrun.sentinel",
+    "tfconfig": "/Users/stephansarver/Downloads/run-4XEyDsdtYEGCfodt-sentinel-mocks/mock-tfconfig.sentinel",
+    "tfplan": "/Users/stephansarver/Downloads/run-4XEyDsdtYEGCfodt-sentinel-mocks/mock-tfplan.sentinel",
+    "tfstate": "/Users/stephansarver/Downloads/run-4XEyDsdtYEGCfodt-sentinel-mocks/mock-tfstate.sentinel"
+  }
+}

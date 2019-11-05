@@ -1,0 +1,28 @@
+import "tfplan"
+import "tfstate"
+import "tfconfig"
+import "tfrun"
+import "sentinel_lib_variables"
+import "sentinel_lib_outputs"
+
+print("------------------------------------------------------------")
+print("Sentinel policy: vpc_2pub_az_2priv_az")
+print("   Using the sentinel_lib_variables to validate all variables have descriptions.")
+print("   Using the sentinel_lib_outputs to validate all outputs have descriptions.")
+print("------------------------------------------------------------")
+
+all_tf_variables_have_descriptions = rule {
+  sentinel_lib_variables.validate_variables_have_descriptions()
+}
+
+all_tf_outputs_have_descriptions = rule {
+  sentinel_lib_outputs.validate_outputs_have_descriptions()
+}
+
+
+
+main = rule {
+  all_tf_variables_have_descriptions and
+  all_tf_outputs_have_descriptions
+
+}

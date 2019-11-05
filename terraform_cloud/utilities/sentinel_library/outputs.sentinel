@@ -1,0 +1,51 @@
+##### Imports #####
+import "tfconfig"
+import "strings"
+
+##### Functions #####
+
+# Validate that all outputs have descriptions
+find_outputs_in_config = func() {
+  outputs = {}
+
+  # Iterate over all modules in the tfconfig import
+  for tfconfig.module_paths as path {
+    # Iterate over the outputs in the module
+    for tfconfig.module(path).outputs else {} as name, v {
+
+      # Get the address of the output
+      if length(path) == 0 {
+        # root module
+        address = name
+      } else {
+        # non-root module
+        address = "module." + strings.join(path, ".module.") + "." + name
+      }
+
+      # Add the variable to the outputs map, setting the key to the address
+      outputs[address] = v
+    }
+  }
+
+  return outputs
+
+}
+
+validate_outputs_have_descriptions = func() {
+
+  validated = true
+
+  # Get all outputs
+  outputs = find_outputs_in_config()
+  print("outputs:", outputs)
+
+  # Iterate over all outputs
+  for outputs as address, v {
+    if v.description else "" is "" {
+      print("output", address, "does not have a description.")
+      validated = false
+    }
+  }
+
+  return validated
+}
