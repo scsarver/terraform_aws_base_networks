@@ -10,3 +10,5 @@ tf-plan*
 .terraform
 backend.conf
 tf-cloud-sentinel-mocks
+sentinel.json
+*mock-*

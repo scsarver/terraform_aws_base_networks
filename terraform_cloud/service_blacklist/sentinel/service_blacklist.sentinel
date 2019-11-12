@@ -1,0 +1,90 @@
+import "tfplan"
+import "tfstate"
+import "tfconfig"
+import "tfrun"
+
+import "types"
+
+print("------------------------------------------------------------")
+print("Sentinel policy: service black list rejects the following terraform objects:")
+print("------------------------------------------------------------")
+
+# services_blacklisted = ["aws_cognito_user_pool", "aws_cognito_identity_pool", "aws_api_gateway_rest_api"]
+services_blacklisted = ["aws_cognito_user_pool", "aws_api_gateway_rest_api"]
+
+for services_blacklisted as service {
+  print("  - " + service )
+}
+print("------------------------------------------------------------")
+print(" ")
+
+get_all_resources_by_type = func(type) {
+	resources = {}
+  if length(tfplan.module_paths else []) > 0 {
+    for tfplan.module_paths as path {
+  		module_resources = tfplan.module(path).resources[type] else {}
+      if (0 != length(module_resources)){
+        for keys(module_resources) as key {
+          resources[key] = module_resources[key]
+        }
+      }
+    }
+  } else {
+    # This is only a case for mock testing when the resources are defined at the root but the module_paths is not defined
+    for keys(tfplan.resources[type]) as key {
+      resources[key] = tfplan.resources[type][key]
+    }
+  }
+  return resources
+}
+
+no_resources_are_blacklisted = func() {
+  violations_found = false
+  if ( 0 != length( tfplan.resources ) ){
+    print("Checking for violations on [" + string(length( tfplan.resources )) + "] resource types.")
+
+    # Loop through the resource types so we can get all instances of the resources
+    for tfplan.resources as resource {
+
+      if services_blacklisted not contains resource {
+        print("  [" + resource + "]- is NOT a Blacklisted resource type, Skipping.")
+
+      } else {
+        print("  [" + resource + "] - is a Blacklisted resource type, checking for destroy.")
+
+        # This collection is a list of maps with the resource name as the key
+        named_resources = get_all_resources_by_type (resource)
+         #print(" xxxxx    - instances: " + types.type_of(named_resources) + " length: " + string(length(named_resources)))
+
+        # We iterate over the list of named_resources to get to the maps inside
+        for named_resources as resource_name, resource_instance {
+          # print("     - resource_name: " + string(resource_name) + " {[type: " + types.type_of(resource_instance) + "], [count: " + string(length(resource_instance)) + "]}")
+
+          # We iterate over the count keys because a named resource can have counts > 1
+          for keys(resource_instance) as resource_instance_member {
+            # We are checking to see if a Blacklisted resource type is being destroyed as we do not want to fail when removing a violations
+            if (resource_instance[resource_instance_member].destroy else false){
+              print("     - resource_name: " + string(resource_name) + " [ destroy: " + string(resource_instance[resource_instance_member].destroy) + " ]")
+            } else {
+              print("     - *** VIOLATION FOUND *** - resource_name: " + string(resource_name))
+              violations_found = true
+            }
+          }
+        }
+      }
+    }
+  }
+  if ( violations_found ){
+    return false
+  } else {
+    return true
+  }
+}
+
+validate_no_blacklisted_resources = rule {
+  no_resources_are_blacklisted()
+}
+
+main = rule {
+  validate_no_blacklisted_resources
+}

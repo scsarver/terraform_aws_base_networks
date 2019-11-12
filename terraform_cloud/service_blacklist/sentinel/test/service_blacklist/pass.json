@@ -1,0 +1,47 @@
+{
+  "global":{},
+  "test": {
+    "main": true,
+    "validate_no_blacklisted_resources": true
+  },
+  "mock": {
+    "tfplan": {
+      "resources": {
+        "aws_cognito_identity_pool": {
+          "pass-cognito-ident-pool": {
+            "0": {
+              "applied":{
+                "identity_pool_name": "pass-cognoito-ident-pool",
+                "allow_unauthenticated_identities": false
+              },
+              "destroy": true
+            }
+          }
+        },
+        "aws_cognito_user_pool": {
+          "pass-cognito-user-pool": {
+            "0": {
+              "applied": {
+                "name": "pass-cognoito-user-pool"
+              },
+              "destroy": true
+            }
+          }
+        },
+        "aws_api_gateway_rest_api": {
+          "pass-api-gateway-rest-api": {
+            "0": {
+              "applied": {
+                "name": "pass-api-gateway-rest-api"
+              },
+              "destroy": true
+            }
+          }
+        }
+      }
+    },
+    "tfstate": {},
+    "tfconfig": {},
+    "tfrun": {}
+  }
+}
