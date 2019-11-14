@@ -15,3 +15,29 @@ resource "aws_organizations_policy_attachment" "sandox" {
   target_id  = "${aws_organizations_organizational_unit.sandbox.id}"
   depends_on = [aws_organizations_organizational_unit.sandbox]
 }
+
+resource "aws_organizations_policy" "example" {
+  name = "deny-acct-allow-billing"
+
+  content = <<CONTENT
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+          "aws-portal:*Billing",
+          "aws-portal:*Usage",
+          "aws-portal:*PaymentMethods"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Deny",
+      "Action": "aws-portal:*Account",
+      "Resource": "*"
+    }
+  ]
+}
+CONTENT
+}
