@@ -19,17 +19,17 @@ resource "aws_organizations_policy_attachment" "sandox" {
 
 # Used the following policy to test sentinel when there is a destroy resource in the plan.
 #
-resource "aws_organizations_policy" "deny-rds" {
-  name = "deny-rds"
-
-  content = <<CONTENT
-{
-    "Version": "2012-10-17",
-    "Statement": {
-        "Effect": "Deny",
-        "Action": [ "rds:*" ],
-        "Resource": "*"
-    }
-}
-CONTENT
-}
+# resource "aws_organizations_policy" "deny-rds" {
+#   name = "deny-rds"
+#
+#   content = <<CONTENT
+# {
+#     "Version": "2012-10-17",
+#     "Statement": {
+#         "Effect": "Deny",
+#         "Action": [ "rds:*" ],
+#         "Resource": "*"
+#     }
+# }
+# CONTENT
+# }
