@@ -63,6 +63,10 @@ no_resources_are_blacklisted = func() {
           # We iterate over the count keys because a named resource can have counts > 1
           for keys(resource_instance) as resource_instance_member {
             # We are checking to see if a Blacklisted resource type is being destroyed as we do not want to fail when removing a violations
+
+
+#TODO: Double check logic here as this might require destroy AND NOT requires_new at the same time!!!
+
             if (resource_instance[resource_instance_member].destroy else false){
               print("     - resource_name: " + string(resource_name) + " [ destroy: " + string(resource_instance[resource_instance_member].destroy) + " ]")
             } else {
