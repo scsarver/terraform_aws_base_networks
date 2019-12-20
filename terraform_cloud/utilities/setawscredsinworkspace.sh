@@ -98,7 +98,7 @@ while read -r line ; do
       # trim leading space
       sts_token=${sts_token##*[ ]}
     fi
-done <<< $(grep -a2 $aws_profile ~/.aws/credentials)
+done <<< $(grep -a3 $aws_profile ~/.aws/credentials)
 
 if [ "" == "$access" ]; then
   echo "ERROR: Unable to lookup the aws credential aws_access_key_id for the default profile from the following file: [~/.aws/credentials] "
