@@ -78,6 +78,7 @@ fi
 # Extract default aws credentials to use for the workspace
 access=
 secret=
+sts_token=
 while read -r line ; do
     if [[ "$line" =~ aws_access_key_id* ]]; then
       # Trim variable assignment
@@ -90,6 +91,12 @@ while read -r line ; do
       secret=${line#*=}
       # trim leading space
       secret=${secret##*[ ]}
+    fi
+    if [[ "$line" =~ aws_session_token* ]]; then
+      # Trim variable assignment
+      sts_token=${line#*=}
+      # trim leading space
+      sts_token=${sts_token##*[ ]}
     fi
 done <<< $(grep -a2 $aws_profile ~/.aws/credentials)
 
@@ -150,6 +157,30 @@ payload2=$(cat <<COMMENTBLOCK
 COMMENTBLOCK
 )
 
+payload3=$(cat <<COMMENTBLOCK
+{
+  "data": {
+    "type":"vars",
+    "attributes": {
+      "key":"AWS_SESSION_TOKEN",
+      "value":"$sts_token",
+      "category":"env",
+      "hcl":false,
+      "sensitive":true
+    },
+    "relationships": {
+      "workspace": {
+        "data": {
+          "id":"$workspace_id",
+          "type":"workspaces"
+        }
+      }
+    }
+  }
+}
+COMMENTBLOCK
+)
+
 # Post access key
 curl \
   --header "Authorization: Bearer $token" \
@@ -164,4 +195,12 @@ curl \
   --header "Content-Type: application/vnd.api+json" \
   --request $http_verb \
   --data "$payload2" \
+  https://app.terraform.io/api/v2/$vars_api_path
+
+# Post sts_token
+curl \
+  --header "Authorization: Bearer $token" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request $http_verb \
+  --data "$payload3" \
   https://app.terraform.io/api/v2/$vars_api_path
