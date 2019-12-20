@@ -10,12 +10,19 @@ resource "aws_organizations_policy" "sandbox" {
   depends_on  = [aws_organizations_organization.org]
 }
 
+# first attached SCP policy using template file data declareation see above.
 resource "aws_organizations_policy_attachment" "sandox" {
   policy_id  = "${aws_organizations_policy.sandbox.id}"
   target_id  = "${aws_organizations_organizational_unit.sandbox.id}"
   depends_on = [aws_organizations_organizational_unit.sandbox]
 }
 
+# Second attached SCP policy using inline declareation see below.
+resource "aws_organizations_policy_attachment" "nist-800-53" {
+  policy_id  = "${aws_organizations_policy.nist-800-53.id}"
+  target_id  = "${aws_organizations_organizational_unit.sandbox.id}"
+  depends_on = [aws_organizations_organizational_unit.sandbox]
+}
 
 # Add additional NIST-800-53 policy statements where applicable
 resource "aws_organizations_policy" "nist-800-53" {
