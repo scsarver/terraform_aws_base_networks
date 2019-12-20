@@ -10,7 +10,7 @@
 set +x #xtrace
 set +v #verbose
 set -e #errexit
-set -u #nounset
+# set -u #nounset
 
 
 if [ "" == "$1" ]; then
