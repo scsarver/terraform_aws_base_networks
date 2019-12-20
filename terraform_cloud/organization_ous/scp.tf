@@ -17,6 +17,59 @@ resource "aws_organizations_policy_attachment" "sandox" {
 }
 
 
+# Add additional NIST-800-53 policy statements where applicable
+resource "aws_organizations_policy" "nist-800-53" {
+  name = "nist-800-53"
+
+  content = <<CONTENT
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyStopCloudTrail",
+      "Effect": "Deny",
+      "Action": [ "cloudtrail:StopLogging" ],
+      "Resource": [ "arn:aws:cloudtrail:::trail/*" ]
+    },
+    {
+      "Sid": "DenyPutS3ObjectNoSSEAES256",
+      "Effect": "Deny",
+      "Action": [ "s3:PutObject" ],
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "s3:x-amz-server-side-encryption": "AES256"
+        }
+      }
+    },
+    {
+      "Sid": "DenyPutS3ObjectSSEFalse",
+      "Effect": "Deny",
+      "Action": [ "s3:PutObject" ],
+      "Resource": "*",
+      "Condition": {
+        "Bool": {
+          "s3:x-amz-server-side-encryption": false
+        }
+      }
+    }
+  ]
+}
+CONTENT
+}
+
+
+# I want to restrict bucket creation without server side encryption set something like this but I am not sur eit is posible
+# BucketEncryption {
+#   - ServerSideEncryptionConfiguration:  [
+#     - ServerSideEncryptionRule
+#       - {
+#           "ServerSideEncryptionByDefault" : ServerSideEncryptionByDefault
+#         }
+#   ]
+# }
+
+
 # Used the following policy to test sentinel when there is a destroy resource in the plan.
 #
 # resource "aws_organizations_policy" "deny-rds" {
