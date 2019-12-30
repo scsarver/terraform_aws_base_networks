@@ -17,3 +17,8 @@ variable "ENV_aws_region" {
   type        = "string"
   description = "The AWS region used to build the assets in."
 }
+
+variable "ENV_rds_pass" {
+  type        = "string"
+  description = "The password to set on the rds instance."
+}
