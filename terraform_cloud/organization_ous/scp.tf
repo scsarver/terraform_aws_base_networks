@@ -59,7 +59,22 @@ resource "aws_organizations_policy" "nist-800-53" {
           "s3:x-amz-server-side-encryption": false
         }
       }
-    }
+    },
+		{
+			"Sid": "DenyRdsStoragedEncryptedFalse",
+			"Effect": "Deny",
+			"Action": [
+				"rds:CreateGlobalCluster",
+        "rds:CreateDBInstance",
+        "rds:CreateDBCluster"
+			],
+			"Resource": "*",
+			"Condition": {
+				"Bool": {
+					"rds:StorageEncrypted": false
+				}
+			}
+		}
   ]
 }
 CONTENT

@@ -12,16 +12,6 @@
       ]
     },
     {
-      "Sid": "Denys3",
-      "Effect": "Deny",
-      "Action":[
-        "s3:*"
-      ],
-      "Resource":[
-        "*"
-      ]
-    },
-    {
       "Sid": "DenyStopCloudTrail",
       "Effect": "Deny",
       "Action":[
