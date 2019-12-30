@@ -9,5 +9,5 @@ resource "aws_db_instance" "scsresearch-scp-test" {
   password          = "${var.ENV_rds_pass}"
 
   # SCP should fail to allow this resource to be created when storage_encrypted is false!
-  storage_encrypted = false
+  # storage_encrypted = false
 }
